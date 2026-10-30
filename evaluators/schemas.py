@@ -5,7 +5,7 @@ class FaithfullnessMetric(BaseModel):
     Evaluates whether the generated answer relies only on the retrieved context.
     Detects hallucinations or ungrounded claims
     """
-    resoning: str = Field(
+    reasoning: str = Field(
         description="Step-by-step CoT reasoning evaluating if any claim is the response lacks support in the context."
     )
     unsupported_claims: list[str] = Field(
