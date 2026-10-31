@@ -18,7 +18,7 @@ class OllamaProvider(BaseLLMProvider):
         response = requests.post(
             f"{self.base_url}/api/generate",
             json={"model": self.model, "prompt": prompt, "system": system_prompt, "stream": False},
-            timeout=30 # Explicit timeout to prevent hanging tests
+            timeout=60 # Explicit timeout to prevent hanging tests
         )
         return response.json().get("response", "")
 
@@ -32,7 +32,7 @@ class OllamaProvider(BaseLLMProvider):
                 "format": schema.model_json_schema(),
                 "stream": False
             },
-            timeout=30 # Explicit timeout to prevent hanging tests
+            timeout=60 # Explicit timeout to prevent hanging tests
         )
         return schema.model_validate_json(response.json().get("response", ""))
     
