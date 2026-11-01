@@ -24,6 +24,10 @@ class RelevancyMetric(BaseModel):
     reasoning: str= Field(
         description="Step-by-step reasoning assessing if the response directly addresses every part of the user query."
     )
+    missing_aspects: list[str] = Field(
+        default_factory=list,
+        description="Lost of specific points from the user query that were ignored or missed in the response."
+    )
     score: float = Field(
         description="Relevancy score from 0.0 (completely irrelevant) to 1.0 (perfectly addresses query)."     
     )
@@ -35,6 +39,10 @@ class ContextPrecisionMetric(BaseModel):
     """
     reasoning: str = Field(
         description="Analysis of the retrieved context chunks, identifying useful context vs noise."
+    )
+    irrelevant_chunks: list[str] = Field(
+        default_factory=list,
+        description="List of context sentences or chunks that add noise and do not help answer the query."
     )
     score: float = Field(
         description="Precision score from 0.0 (all noise/irrelevant context) to 1.0 (highly relevant context)."
