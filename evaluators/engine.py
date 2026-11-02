@@ -77,4 +77,3 @@ class RAGEvaluator:
         """
         return self._execute_with_retry(prompt=prompt_text, schema=ContextPrecisionMetric)
 
-    

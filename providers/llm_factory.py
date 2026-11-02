@@ -7,7 +7,7 @@ load_dotenv()
 from .base import BaseLLMProvider
 from .ollama_provider import OllamaProvider
 from .openai_provider import OpenAIProvider
-from .gemini_provider import GeminiProvider
+from .google_provider import GoogleProvider
 
 def get_llm_provider() -> BaseLLMProvider:
     # Read environment setting; default to local Ollama execution
@@ -24,12 +24,12 @@ def get_llm_provider() -> BaseLLMProvider:
             model=os.getenv("OPENAI_MODEL", "gpt-40")
         )
     elif execution_mode == "GOOGLE":
-        return GeminiProvider(
-            model=os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
+        return GoogleProvider(
+            model=os.getenv("GOOGLE_MODEL", "gemini-3.8-flash")
         )
     else:
         raise ValueError(
             f"Unsupported execution mode: '{execution_mode}'. "
-            f"Supported model: LOCAL, OPENAI, GEMINI."
+            f"Supported model: LOCAL, OPENAI, GOOGLE."
             )
     

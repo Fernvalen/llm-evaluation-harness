@@ -7,17 +7,17 @@ from .base import BaseLLMProvider
 
 T = TypeVar("T", bound=BaseModel)
 
-class GeminiProvider(BaseLLMProvider):
+class GoogleProvider(BaseLLMProvider):
     def __init__(self, api_key: str | None = None, model: str | None = None):
-        self.api_key = api_key or os.getenv("GEMINI_API_KEY")
+        self.api_key = api_key or os.getenv("GOOGLE_API_KEY")
         if not self.api_key:
-            raise ValueError("Gemini API Key must be provided or set in environment variables.")
+            raise ValueError("Google API Key must be provided or set in environment variables.")
 
         self.client = genai.Client(api_key=self.api_key)
-        self.model = model or os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
+        self.model = model or os.getenv("GOOGLE_MODEL", "gemini-3.8-flash")
 
     def generate(self, prompt: str, system_prompt: str = "") -> str:
-        """Standard text generation using Gemini"""
+        """Standard text generation using Google's endpoint"""
         config = types.GenerateContentConfig(
             temperature=0.0,
             system_instruction=system_prompt if system_prompt else None
@@ -30,7 +30,7 @@ class GeminiProvider(BaseLLMProvider):
         return response.text or ""
 
     def generate_structure(self, prompt: str, schema: Type[T]) -> T:
-        """Enforces native Pydantic schema outputs using Gemini Structured Outputs."""
+        """Enforces native Pydantic schema outputs using Structured Outputs."""
         config = types.GenerateContentConfig(
             temperature=0.0,
             response_mime_type="application/json",
