@@ -1,3 +1,5 @@
+import pytest
+
 class TestFaithfulnessQualityGates:
     
     def test_faithfulness_passes_on_grounded_response(self, evaluator):

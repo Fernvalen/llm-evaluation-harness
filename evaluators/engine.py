@@ -1,6 +1,6 @@
 import time
 from providers.llm_factory import get_llm_provider
-from .schemas import FaithfullnessMetric, RelevancyMetric, ContextPrecisionMetric
+from .schemas import FaithfullnessMetric, RelevancyMetric, ContextPrecisionMetric, ContextRecallMetric
 
 class RAGEvaluator:
     def __init__(self):
@@ -76,4 +76,27 @@ class RAGEvaluator:
         Step 5. Provide step-by-step CoT analysis in 'reasoning'. 
         """
         return self._execute_with_retry(prompt=prompt_text, schema=ContextPrecisionMetric)
+
+    def evaluate_context_recall(self, query:str, context: str, ground_truth: str) -> ContextRecallMetric:
+        prompt_text = f"""
+        You a Quality Assurance evaluator assessing vector retrieval completeness for a RAG system.
+
+        INPUT DATA:
+        - USER QUERY: {query}
+        - RETRIEVED CONTEXT: {context}
+        - GROUND TRUTH: {ground_truth}
+
+        EVALUATION STEPS:
+        Step 1: Extract every key factual claim from the GROUND TRUTH needed to answer the USER QUERY
+        Step 2: Check whether each ground truth claim is present in the RETRIEVED CONTEXT.
+        Step 3: In 'unretrieved_facts', list  any ground truth facts that are missing from the RETRIEVED CONTEXT.
+        Step 4: Calculate the scor using this formula
+                - Count total ground truth claims (N_total)
+                - Count missing claims (N_missing)
+                - If N_total == 0, score = 1.0
+                - Otherwise, score = (N_total - N_missing) / N_total.
+                (Output a float between 0.0 and 1.0)
+        Step 5: Provide step-by-step COT analysis in 'reasoning'.
+        """
+        return self._execute_with_retry(prompt=prompt_text, schema=ContextRecallMetric)
 

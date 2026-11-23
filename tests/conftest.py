@@ -1,6 +1,7 @@
 import sys
 from pathlib import Path
 from dotenv import load_dotenv
+from evaluators.engine import RAGEvaluator
 import pytest
 
 # Find project root path
@@ -14,8 +15,6 @@ load_dotenv(dotenv_path=ENV_PATH, override=True)
 # Ensure project root is in Python path for clean package imports
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
-
-from evaluators.engine import RAGEvaluator
 
 @pytest.fixture(scope="session", autouse=True)
 def warm_up_model():

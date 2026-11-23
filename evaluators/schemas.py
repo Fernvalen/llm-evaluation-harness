@@ -47,3 +47,19 @@ class ContextPrecisionMetric(BaseModel):
     score: float = Field(
         description="Precision score from 0.0 (all noise/irrelevant context) to 1.0 (highly relevant context)."
     )
+
+class ContextRecallMetric(BaseModel):
+    """
+    Evaluates wether the retrieved context contains ALL necessary information
+    from the ground truth to answer the user query completely,
+    """
+    reasoning: str = Field(
+        description="Step-by-sep analysis comparing ground truth statements against the retrieved context"
+    )
+    unretrieved_facts: list[str] = Field(
+        default_factory=list,
+        description="List of key facts present in te ground truth that were MISSING from retrieved context."
+    )
+    score: float = Field(
+        decrption="Recall ratio score from 0.0 (zero ground truth facts retrieved) to 1.0 (all ground truth facts retrieved)."
+    )
