@@ -1,0 +1,34 @@
+[
+    {
+        "id": "tc-001",
+        "topic": "Return Policy - Grounded",
+        "query": "What is the return policy for damaged items?",
+        "context": "Damaged items can be returned within 30 days of purchase with full proof of purchase for a 100% refund.",
+        "response": "You can return damaged goods within 30 days if you have full proof of purchase to receive a 100% refund.",
+        "ground_truth": "Damaged items can be returned within 30 days of purchase with full proof of purchase for a 100% refund."
+    },
+    {
+        "id": "tc-002",
+        "topic": "Return Policy - Hallucination",
+        "query": "What is the return policy for damaged items?",
+        "context": "Damaged items can be returned within 30 days of purchase with full proof of purchase for a 100% refund.",
+        "response": "You can return damaged items within 30 days. We also offer free return shipping and a $10 gift card.",
+        "ground_truth": "Damaged items can be returned within 30 days of purchase with full proof of purchase for a 100% refund."
+    },
+    {
+        "id": "tc-003",
+        "topic": "Support Hours - Evasive",
+        "query": "What are your support hours on weekends?",
+        "context": "Customer support operates Monday through Friday, 9 AM to 5 PM EST. Closed on weekends.",
+        "response": "We offer multi-channel customer support including live chat, email ticketing, and phone assistance.",
+        "ground_truth": "Support is closed on weekends."
+    },
+    {
+        "id": "tc-004",
+        "topic": "Password Reset - Complete",
+        "query": "How do I reset my password?",
+        "context": "To reset your password, click 'Forgot Password' on the login screen and follow the email verification link.",
+        "response": "Click 'Forgot Password' on the login page and follow the verification link sent to your email.",
+        "ground_truth": "Click 'Forgot Password' on the login screen and follow the email link."
+    }
+]
