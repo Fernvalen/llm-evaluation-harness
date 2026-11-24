@@ -2,8 +2,14 @@ import json
 import time
 from pathlib import Path
 from evaluators.engine import RAGEvaluator
+from evaluators.reporter import BenchmarkReporter
 
-def run_benchmark(dateset_path: str = "data/golden_dataset.json"):
+def run_benchmark(
+    dateset_path: str = "data/golden_dataset.json",
+    reports_dir: str = "reports",
+    export_json: bool = True,
+    export_csv: bool = True,
+):
     """
     Executes a bulk evaluation benchmark over  a dataset and produces aggregate summary metrics.    
     """
@@ -15,6 +21,7 @@ def run_benchmark(dateset_path: str = "data/golden_dataset.json"):
         dataset = json.load(f)
 
     evaluator = RAGEvaluator()
+    reporter = BenchmarkReporter(reports_dir=reports_dir)
     results = []
     start_time = time.time()
 
@@ -50,9 +57,16 @@ def run_benchmark(dateset_path: str = "data/golden_dataset.json"):
         results.append({
             "id": item_id,
             "topic": topic,
+            "query": query,
+            "context": context,
+            "reponse": response,
             "faithfulness_score": faith.score,
+            "faithfulness_reasoning": faith.reasoning,
+            "unsupported_claims": faith.unsupported_claims,
             "relevancy_score": rel.score,
-            "passed": passed
+            "relevancy_reasoning": rel.reasoning,
+            "missing_aspects": rel.missing_aspects,
+            "passed_gate": passed
         })
     elapsed_time = time.time() - start_time
     total_items = len(dataset)
@@ -60,15 +74,25 @@ def run_benchmark(dateset_path: str = "data/golden_dataset.json"):
     avg_rel = total_rel / total_items if total_items > 0 else 0.0
     pass_rate = (passed_gates / total_items) * 100 if total_items > 0 else 0.0
 
-    print("=" * 80)
-    print("📊 BENCHMARK SUMMARY REPORT")
-    print("=" * 80)
-    print(f"• Total Test Cases:        {total_items}")
-    print(f"• Quality Gate Pass Rate:  {pass_rate:.1f}% ({passed_gates}/{total_items})")
-    print(f"• Mean Faithfulness:       {avg_faith:.2f}")
-    print(f"• Mean Relevancy:          {avg_rel:.2f}")
-    print(f"• Execution Time:          {elapsed_time:.2f}s")
-    print("=" * 80)
+    reporter.print_summary_report(
+        total_items=total_items,
+        passed_gates=passed_gates,
+        pass_rate=pass_rate,
+        avg_faith=avg_faith,
+        avg_rel=avg_rel,
+        elapsed_time=elapsed_time
+    )
+
+    reporter.export_artifacts(
+        results=results,
+        total_items=total_items,
+        pass_rate=pass_rate,
+        avg_faith=avg_faith,
+        avg_rel=avg_rel,
+        elapsed_time=elapsed_time,
+        export_json=export_json,
+        export_csv=export_csv
+    )
 
     return results
 

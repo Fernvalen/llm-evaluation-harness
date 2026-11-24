@@ -41,3 +41,7 @@ dist/
 .idea/
 .DS_Store
 Thumbs.db
+*.log
+
+# Benchmark Report Files
+reports/
