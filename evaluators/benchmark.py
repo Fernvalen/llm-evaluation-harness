@@ -43,7 +43,7 @@ def run_benchmark(
         faith = evaluator.evaluate_faithfulness(query=query, context=context, response=response)
         rel = evaluator.evaluate_relevancy(query=query, response=response)
 
-        # Gate pass criteria: Bot scores meet 0.85 threshold
+        # Gate pass criteria: Both scores meet 0.85 threshold
         passed = faith.score >= 0.85 and rel.score >= 0.85
         if passed:
             passed_gates += 1

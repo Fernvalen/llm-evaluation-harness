@@ -1,15 +1,27 @@
 import pytest
+from evaluators.dataset import load_dataset_by_metric
+
+relevancy_cases = load_dataset_by_metric("Relevancy")
 
 class TestRelevancyQualityGate:
 
-    def test_relevancy_passes_on_complete_amswer(self, evaluator):
-        query = "What is your business hours and phone number?"
-        response = "We are open Monday through Friday from 9 AM to 5 PM EST. You can reach us at 1-800-555-0199."
+    @pytest.mark.parametrize("case", relevancy_cases, ids=lambda c: c["id"])
+    def test_relevancy_passes_on_complete_amswer(self, evaluator, case):
+        query = case["query"]
+        response = case["response"]
+        expected_outcome = case.get("expected_outcome", "UNKNOWN")
 
         metric = evaluator.evaluate_relevancy(query=query, response=response)
 
-        print(f"\n[RELEVANCY SCORE]: {metric.score}")
+        print(f"\n[{case['id']} - {case['topic']}] Score: {metric.score}")
         print(f"\n[REASONING]: {metric.reasoning}")
-        print(f"\n[MISSING ASPECTS]: {metric.missing_aspects}")
 
-        assert metric.score >= 0.85, f"Relevancy gate failed! Missing: {metric.missing_aspects}"
+        if expected_outcome == "PASS":
+            assert metric.score >= 0.85, (
+                f"Relevancy gate 'FAIL'."
+                f"[MISSING ASPECTS]: {metric.missing_aspects}"
+            )
+        else:
+            assert metric.score < 0.85, (
+                f"Expected failure on evasive/irrelevant response but gate passed"
+            )

@@ -1,8 +1,8 @@
 import sys
 from pathlib import Path
 from dotenv import load_dotenv
-from evaluators.engine import RAGEvaluator
 import pytest
+from evaluators.engine import RAGEvaluator
 
 # Find project root path
 TESTS_DIR = Path(__file__).parent.resolve()

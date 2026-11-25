@@ -17,6 +17,7 @@ __pycache__/
 .coverage.*
 coverage.xml
 htmlcov/
+old_test*
 
 # Type checking / lint / tooling caches
 .mypy_cache/

@@ -5,7 +5,9 @@
         "query": "What is the return policy for damaged items?",
         "context": "Damaged items can be returned within 30 days of purchase with full proof of purchase for a 100% refund.",
         "response": "You can return damaged goods within 30 days if you have full proof of purchase to receive a 100% refund.",
-        "ground_truth": "Damaged items can be returned within 30 days of purchase with full proof of purchase for a 100% refund."
+        "ground_truth": "Damaged items can be returned within 30 days of purchase with full proof of purchase for a 100% refund.",
+        "target_metrics": ["Faithfulness"],
+        "expected_outcome": "PASS"
     },
     {
         "id": "tc-002",
@@ -13,22 +15,38 @@
         "query": "What is the return policy for damaged items?",
         "context": "Damaged items can be returned within 30 days of purchase with full proof of purchase for a 100% refund.",
         "response": "You can return damaged items within 30 days. We also offer free return shipping and a $10 gift card.",
-        "ground_truth": "Damaged items can be returned within 30 days of purchase with full proof of purchase for a 100% refund."
+        "ground_truth": "Damaged items can be returned within 30 days of purchase with full proof of purchase for a 100% refund.",
+        "target_metrics": ["Faithfulness"],
+        "expected_outcome": "FAIL"
     },
     {
         "id": "tc-003",
+        "topic": "Support Hours - Direct",
+        "query": "What is your business hours and phone number?",
+        "context": "Customer support operates Monday through Friday, 9 AM to 5 PM EST. Closed on weekends. Telephone number 1-800-555-0199",
+        "response": "We are open Monday through Friday from 9 AM to 5 PM EST. You can reach us at 1-800-555-0199.",
+        "ground_truth": "Customer support operates Monday through Friday, 9 AM to 5 PM EST. Closed on weekends. Telephone number 1-800-555-0199.",
+        "target_metrics": ["Relevancy"],
+        "expected_outcome": "PASS"
+    },
+    {
+        "id": "tc-004",
         "topic": "Support Hours - Evasive",
         "query": "What are your support hours on weekends?",
         "context": "Customer support operates Monday through Friday, 9 AM to 5 PM EST. Closed on weekends.",
         "response": "We offer multi-channel customer support including live chat, email ticketing, and phone assistance.",
-        "ground_truth": "Support is closed on weekends."
+        "ground_truth": "Support is closed on weekends.",
+        "target_metrics": ["Relevancy"],
+        "expected_outcome": "FAIL"
     },
     {
-        "id": "tc-004",
+        "id": "tc-005",
         "topic": "Password Reset - Complete",
         "query": "How do I reset my password?",
         "context": "To reset your password, click 'Forgot Password' on the login screen and follow the email verification link.",
         "response": "Click 'Forgot Password' on the login page and follow the verification link sent to your email.",
-        "ground_truth": "Click 'Forgot Password' on the login screen and follow the email link."
+        "ground_truth": "Click 'Forgot Password' on the login screen and follow the email link.",
+        "target_metrics": ["None"],
+        "expected_outcome": "None"
     }
 ]

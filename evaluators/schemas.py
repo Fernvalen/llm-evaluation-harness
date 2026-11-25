@@ -61,5 +61,5 @@ class ContextRecallMetric(BaseModel):
         description="List of key facts present in te ground truth that were MISSING from retrieved context."
     )
     score: float = Field(
-        decrption="Recall ratio score from 0.0 (zero ground truth facts retrieved) to 1.0 (all ground truth facts retrieved)."
+        description="Recall ratio score from 0.0 (zero ground truth facts retrieved) to 1.0 (all ground truth facts retrieved)."
     )
