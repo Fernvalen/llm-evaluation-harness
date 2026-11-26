@@ -14,7 +14,7 @@ def get_llm_provider() -> BaseLLMProvider:
     execution_mode = os.getenv("LLM_EXECUTION_MODE", "LOCAL").upper()
 
     if execution_mode == "LOCAL":
-        print("\n[PROVIDER] Ollama")
+        print("\n[PROVIDER] Local - Ollama")
         return OllamaProvider(
             base_url=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434"),
             model=os.getenv("OLLAMA_MODEL", "llama3.2")

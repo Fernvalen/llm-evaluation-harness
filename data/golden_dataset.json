@@ -41,12 +41,32 @@
     },
     {
         "id": "tc-005",
-        "topic": "Password Reset - Complete",
+        "topic": "Password Reset - Noisy Context",
         "query": "How do I reset my password?",
-        "context": "To reset your password, click 'Forgot Password' on the login screen and follow the email verification link.",
+        "context": "To reset your password, click 'Forgot Password' on the login screen. Email will sent with verification link to reset password. Our company was founded in 1998 in Boston and has over 500 employees worldwide.",
         "response": "Click 'Forgot Password' on the login page and follow the verification link sent to your email.",
         "ground_truth": "Click 'Forgot Password' on the login screen and follow the email link.",
-        "target_metrics": ["None"],
-        "expected_outcome": "None"
+        "target_metrics": ["Precision"],
+        "expected_outcome": "FAIL"
+    },
+        {
+        "id": "tc-006",
+        "topic": "Password Reset - Factual",
+        "query": "What are the requirements for password resets?",
+        "context": "To reset your password, you need an active email address on file. You will also be prompted for 2FA confirmation sent via SMS.",
+        "response": "You require active email address and 2FA confirmation via SMS",
+        "ground_truth": "Password resets require an active email address and 2FA confirmation via SMS.",
+        "target_metrics": ["Recall"],
+        "expected_outcome": "PASS"
+    },
+        {
+        "id": "tc-007",
+        "topic": "Password Reset - Missing Context",
+        "query": "What are the requirements for password resets?",
+        "context": "To reset your password, you only need an active email address on file.",
+        "response": "You require active email address",
+        "ground_truth": "Password resets require an active email address and 2FA confirmation via SMS.",
+        "target_metrics": ["Recall"],
+        "expected_outcome": "FAIL"
     }
 ]

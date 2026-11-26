@@ -6,7 +6,7 @@ relevancy_cases = load_dataset_by_metric("Relevancy")
 class TestRelevancyQualityGate:
 
     @pytest.mark.parametrize("case", relevancy_cases, ids=lambda c: c["id"])
-    def test_relevancy_passes_on_complete_amswer(self, evaluator, case):
+    def test_relevancy_gate(self, evaluator, case):
         query = case["query"]
         response = case["response"]
         expected_outcome = case.get("expected_outcome", "UNKNOWN")
@@ -18,10 +18,10 @@ class TestRelevancyQualityGate:
 
         if expected_outcome == "PASS":
             assert metric.score >= 0.85, (
-                f"Relevancy gate 'FAIL'."
-                f"[MISSING ASPECTS]: {metric.missing_aspects}"
+                f"\nExpected 'PASS' but Relevancy score below threshold: {metric.score}."
+                f"\n[MISSING ASPECTS]: {metric.missing_aspects}"
             )
         else:
             assert metric.score < 0.85, (
-                f"Expected failure on evasive/irrelevant response but gate passed"
+                f"\nExpected 'FAIL' (Evasive/Irrelevant) by Relevancy score above threshold: {metric.score}."
             )

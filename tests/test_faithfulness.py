@@ -1,7 +1,7 @@
 import pytest
 from evaluators.dataset import load_dataset_by_metric
 
-faithfulness_cases = load_dataset_by_metric("faithfulness")
+faithfulness_cases = load_dataset_by_metric("Faithfulness")
 
 class TestFaithfulnessQualityGates:
 
@@ -21,16 +21,16 @@ class TestFaithfulnessQualityGates:
 
         # Print reasoning to terminal output for debugging (visible via 'pytest -s')
         print(f"\n[{case['id']} - {case['topic']}] Score: {metric.score}")
-        print(f"[REASONING]: {metric.reasoning}")
+        print(f"\n[REASONING]: {metric.reasoning}")
 
         # Quality gate assertion
         if expected_outcome == "PASS":
             assert metric.score >= 0.85, (
-                f"Expected 'PASS' but Faithfulness score dropped below threshold: {metric.score}."
-                f"[UNSUPORTED CLAIMS]: {metric.unsupported_claims}"
+                f"\nExpected 'PASS' but Faithfulness score below threshold: {metric.score}."
+                f"\n[UNSUPORTED CLAIMS]: {metric.unsupported_claims}"
             )
         else:
             assert metric.score < 0.85, (
-                f"Expected 'FAIL' (Hallucination) but Faithfulness score passed: {metric.score}."
+                f"\nExpected 'FAIL' (Hallucination) but Faithfulness score above threshold: {metric.score}."
             )
     
